@@ -1,5 +1,5 @@
+from time import sleep
 import random
-from math import sin, tau
 from pygame import  *
 from pygame.time import  *
 from pygame.transform import grayscale
@@ -10,19 +10,18 @@ class Bird:
         width = 64
         height = width * self.sprite.get_height() / self.sprite.get_width()
         self.sprite = transform.scale(self.sprite, (width, height))
-        self.sprite = transform.rotate(self.sprite, tau/4)
         self.rectangle = self.sprite.get_rect(centerx = x, centery=y)
         self.gravity = 0
     def paint(self, surface):
         surface.blit(self.sprite, self.rectangle)
     def jump(self, delta):
+        mixer.Channel(0).play(mixer.Sound('whoosh.wav'), maxtime=600)
         self.gravity = -0.5 * delta
     def update(self, delta):
         self.rectangle.top += self.gravity
         self.gravity += 0.025 * delta
-        if self.rectangle.bottom < 0:
-            exit()
-        if self.rectangle.top > 16 * 50:
+        if self.rectangle.bottom < 0 or self.rectangle.top > 16 * 50:
+            sleep(0.5)
             exit()
             
 color = (200, 200, 255)
@@ -97,6 +96,7 @@ class Game:
                 self.tower.bottom_rectangle.colliderect(self.bird.rectangle)
                 ):
             self.playing = False
+            sleep(0.5)
         self.score += 1
 
 
