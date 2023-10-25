@@ -20,9 +20,12 @@ class Bird:
     def update(self, delta):
         self.rectangle.top += self.gravity
         self.gravity += 0.025 * delta
-        if self.rectangle.bottom < 0 or self.rectangle.top > 16 * 50:
-            sleep(0.5)
-            exit()
+        if self.rectangle.bottom < 0:
+            self.rectangle.top = 800
+        if self.rectangle.top > 800:
+            self.rectangle.bottom = 0
+
+
             
 color = (200, 200, 255)
 class Tower:
